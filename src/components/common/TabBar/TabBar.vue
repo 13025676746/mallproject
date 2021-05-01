@@ -30,10 +30,10 @@
     },
     methods: {
       changePage(index) {
-        this.currentIndex=index
-        if(this.$route.path!=this.options.list[index].pagePath){
+        if (this.currentIndex!=index)
+          this.currentIndex=index
+        if(this.$route.path!=this.options.list[index].pagePath)
           this.$router.push(this.options.list[index].pagePath)
-        }
       }
     },
   }
