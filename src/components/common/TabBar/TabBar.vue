@@ -56,10 +56,8 @@
     width: 25px
     height: 25px
     position: relative
-    top: 3px
+    top: 2px
   .title
     font-size: 14px
     line-height: 20px
-    position: relative
-    bottom: 2px
 </style>

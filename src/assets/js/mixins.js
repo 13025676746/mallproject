@@ -1,40 +1,60 @@
-/*
-* 封装防抖函数
-* 作用：减少其参数func的调用次数
-* */
-export function debounce(func,delay){
-  let timer=null
-  return function (...args) {
-    if (timer) clearTimeout(timer)
-    timer=setTimeout(()=>{
-      func(...args)
-    },delay)
+import Scroll from "../../components/common/Scroll/Scroll";
+import Swiper from "../../components/common/Swiper/Swiper";
+import SwiperItem from "../../components/common/Swiper/SwiperItem";
+import NavBar from "../../components/common/NavBar/NavBar";
+
+export const ScrollMixin={
+  components:{
+    Scroll
+  },
+  data() {
+    return {
+      options: {
+        height:'calc(100vh - 44px - 49px)',
+        probeType:2,
+        pullUpLoad:true,
+        click:true
+      }
+    }
+  },
+  methods:{
+    pullingUpListen(){
+      this.$emit('requestMoreGoodsData')
+    }
   }
 }
 
-/*
-* 封装时间格式转化函数
-* */
-export function formatDate(date, fmt) {
-  if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
-  }
-  let o = {
-    'M+': date.getMonth() + 1,
-    'd+': date.getDate(),
-    'h+': date.getHours(),
-    'm+': date.getMinutes(),
-    's+': date.getSeconds()
-  };
-  for (let k in o) {
-    if (new RegExp(`(${k})`).test(fmt)) {
-      let str = o[k] + '';
-      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str));
+export const SwiperMixin={
+  components:{
+    Swiper,
+    SwiperItem
+  },
+  props: {
+    swiperData: {
+      type: Array,
+      require:true
     }
-  }
-  return fmt;
-};
+  },
+}
 
-function padLeftZero (str) {
-  return ('00' + str).substr(str.length);
-};
+export const ControlTabMixin={
+  data() {
+    return {
+      currentType:'pop'
+    }
+  },
+  mounted() {
+    //监听点击，显示不同的商品数据
+    this.$bus.$on('controlTabItemClick',(index)=>{
+      if (index===0){
+        this.currentType='pop'
+      }else if(index===1){
+        this.currentType='new'
+      }else {
+        this.currentType='sell'
+      }
+      this.getSubcategotyDetailData && this.getSubcategotyDetailData()
+    })
+  },
+}
+

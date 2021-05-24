@@ -1,0 +1,17 @@
+#滚动容器
+##必传属性
+options
+###options配置选项
+####height
+设置容器高度，值：String     
+默认值：300px
+####probeType
+设置监听滚动类型，值：Number（0,1,2,3）        
+0和1不监听，2监听非惯性滚动，3监听惯性滚动       
+默认值：0
+####pullUpLoad
+设置是否允许上拉加载，值：Boolean        
+默认值：false
+####click
+设置容器内的元素能否被点击，值：Boolean     
+默认值：true

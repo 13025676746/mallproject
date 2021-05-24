@@ -8,7 +8,7 @@ import mutations from "@/store/mutations";
 Vue.use(Vuex)
 
 const state={
-
+  cartList:[]
 }
 
 export default new Vuex.Store({

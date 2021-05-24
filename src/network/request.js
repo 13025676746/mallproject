@@ -32,3 +32,23 @@ export function request(options) {
   * */
   return axiosInstance(options)
 }
+
+export function registerOrLogin(options) {
+  const axiosInstance=axios.create({
+    // baseURL:'http://120.79.69.197:8080/api',
+    baseURL:'http://localhost:3000/api',
+    timeout:5000
+  })
+  axiosInstance.interceptors.request.use(config => {
+    config.headers.authorization = window.sessionStorage.getItem('token')
+    return config
+  }, error => {
+    console.log(error);
+  })
+  axiosInstance.interceptors.response.use(res => {
+    return res.data
+  }, error => {
+    console.log(error);
+  })
+  return axiosInstance(options)
+}
