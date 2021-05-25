@@ -35,8 +35,8 @@ export function request(options) {
 
 export function registerOrLogin(options) {
   const axiosInstance=axios.create({
-    // baseURL:'http://120.79.69.197:8080/api',
-    baseURL:'http://localhost:3000/api',
+    baseURL:'http://120.79.69.197:8080/api',
+    // baseURL:'http://localhost:3000/api',
     timeout:5000
   })
   axiosInstance.interceptors.request.use(config => {

@@ -1,24 +1,27 @@
 const express = require('express')
 const excuteSql = require('./database')
 const jwt =require('jsonwebtoken')
+const md5 = require('blueimp-md5')
 
 const router = express.Router()
 
 router.post('/api/register', ((req, res) => {
   excuteSql(`select * from user where username='${req.body.username}'`, (err, data) => {
-    if (data[0]) return res.send('用户名已存在,注册失败')
-      excuteSql(`insert into user (username,password) 
-                    value ('${req.body.username}','${req.body.password}')`, (err, data) => {
-        res.send('注册成功')
-      })
+    if (data[0]) return res.send('用户名已存在')
+    const password=md5(md5(req.body.password))
+    excuteSql(`insert into user (username,password) 
+                  value ('${req.body.username}','${password}')`, (err, data) => {
+      res.send('注册成功')
+    })
   })
 }))
 
 router.post('/api/login', ((req, res) => {
+  const password=md5(md5(req.body.password))
   excuteSql(`select * from user 
   where username='${req.body.username}' 
-  and password='${req.body.password}'`, (err, data) => {
-    if(!data[0]) res.send('用户名或密码错误')
+  and password='${password}'`, (err, data) => {
+    if(!data[0]) return res.send('用户名或密码错误')
     const token = jwt.sign({
       id:data[0].id,
       username:data[0].username

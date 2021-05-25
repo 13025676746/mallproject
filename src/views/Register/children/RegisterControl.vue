@@ -33,17 +33,19 @@
     },
     methods: {
       registerUser() {
-        if(!this.username) return alert('用户名不能为空')
-        if(!this.password) return alert('密码不能为空')
-        if(!this.repeatPassword) return alert('请输入确认密码')
-        if(this.password !== this.repeatPassword) return alert('两次密码不一致')
+        if(!this.username) return this.$toast.show('failure','用户名不能为空')
+        if(!this.password) return this.$toast.show('failure','密码不能为空')
+        if(!this.repeatPassword) return this.$toast.show('failure','请输入确认密码')
+        if(this.password !== this.repeatPassword) return this.$toast.show('failure','两次密码不一致')
         registerUser(this.username,this.password).then(res=>{
+          if(res=='用户名已存在') return this.$toast.show('failure','用户名已存在')
           if(res=='注册成功') {
-            // console.log('注册成功')
             this.$toast.show('success','注册成功')
             setTimeout(()=>{
               this.$router.replace('/login')
             },1500)
+          }else{
+            this.$toast.show('failure','连接超时')
           }
         })
       }

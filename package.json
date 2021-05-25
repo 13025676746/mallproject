@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "better-scroll": "^2.3.0",
+    "blueimp-md5": "^2.18.0",
     "body-parser": "^1.19.0",
     "core-js": "^3.6.5",
     "express": "^4.17.1",

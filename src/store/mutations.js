@@ -4,7 +4,6 @@ export default {
   },
   addGoods(state,goods){
     state.cartList.push(goods)
-    console.log(goods)
   },
   addGoodsNumber(state,iid){
     state.cartList.forEach(item=>{

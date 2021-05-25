@@ -18,7 +18,7 @@ export function getDetailData(iid) {
       iid
     }
   }).then(res=>{
-    console.log(res)
+    // console.log(res)
     return new DetailData(res)
   })
 }

@@ -39,17 +39,21 @@
         this.$router.push('/register')
       },
       login(){
-        if(!this.username) return alert('用户名不能为空')
-        if(!this.password) return alert('密码不能为空')
+        if(!this.username) return this.$toast.show('failure','用户名不能为空')
+        if(!this.password) return this.$toast.show('failure','密码不能为空')
         userLogin(this.username,this.password).then(res=>{
-          if(res=='用户名或密码错误') return alert('用户或密码错误')
-          sessionStorage.setItem('token',res.token)
-          sessionStorage.setItem('userId',res.id)
-          sessionStorage.setItem('username',res.username)
-          this.$toast.show('success','登录成功')
-          setTimeout(()=>{
-            this.$router.push('/')
-          },1500)
+          if(res=='用户名或密码错误') return this.$toast.show('failure','用户或密码错误')
+          if(typeof res == 'object'){
+            sessionStorage.setItem('token',res.token)
+            sessionStorage.setItem('userId',res.id)
+            sessionStorage.setItem('username',res.username)
+            this.$toast.show('success','登录成功')
+            return setTimeout(()=>{
+              this.$router.push('/')
+            },1500)
+          }else{
+            this.$toast.show('failure','连接超时')
+          }
         })
       }
     },
